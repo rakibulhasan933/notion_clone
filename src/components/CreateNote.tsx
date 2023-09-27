@@ -1,11 +1,13 @@
 "use client"
 import React, { useState } from 'react'
-import { Plus } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
 import { useRouter } from "next/navigation";
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 import Link from 'next/link'
 import Popup from './Popup';
+import { useMutation } from '@tanstack/react-query';
+import axios from "axios";
 
 
 export default function CreateNote() {
@@ -21,6 +23,15 @@ export default function CreateNote() {
   const closePopup = () => {
     setIsPopupOpen(false);
   };
+  // Data  send
+  const createNoteBooks = useMutation({
+    mutationFn: async () => {
+      const response = await axios.post("/api/createNoteBook", {
+        name: input,
+      });
+      return response.data;
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,6 +39,14 @@ export default function CreateNote() {
       window.alert("Please enter a name for your notebook");
       return;
     }
+    createNoteBooks.mutate(undefined, {
+      onSuccess: () => {
+        closePopup();
+      },
+      onError: (error) => {
+        console.log(error);
+      }
+    })
   };
 
 
@@ -42,7 +61,6 @@ export default function CreateNote() {
         </button>
       </div>
       <Popup isOpen={isPopupOpen} onClose={closePopup}>
-
         <div className="text-center">
           <h2 className=" font-bold text-lg">New Note Book</h2>
           <p className=" font-light">You can create a new note by clicking the button below.</p>
@@ -61,7 +79,11 @@ export default function CreateNote() {
             <Button
               type="submit"
               className="bg-green-600"
+              disabled={createNoteBooks.isLoading}
             >
+              {createNoteBooks.isLoading && (
+                <Loader2 className=' w-4 h-4 mr-2 animate-spin' />
+              )}
               Create
             </Button>
           </div>
