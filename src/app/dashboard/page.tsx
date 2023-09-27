@@ -6,6 +6,7 @@ import { UserButton } from "@clerk/nextjs";
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react'
 import { Separator } from '@/components/ui/separator';
+import CreateNote from '@/components/CreateNote';
 
 export default async function Dashboard() {
 	const user: User | null = await currentUser();
@@ -32,6 +33,12 @@ export default async function Dashboard() {
 					<div className="h-8"></div>
 					<Separator />
 					<div className="h-8"></div>
+					<div className="text-center">
+						<h2 className="text-xl text-gray-500">You have no notes yet.</h2>
+					</div>
+					<div className="grid sm:grid-cols-3 md:grid-cols-5 grid-cols-1 gap-3">
+						<CreateNote />
+					</div>
 				</div>
 			</div>
 		</>

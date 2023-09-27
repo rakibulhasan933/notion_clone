@@ -1,4 +1,4 @@
-import TypeWriter from "@/components/ui/TypeWriter";
+import TypeWriter from "@/components/TypeWriter";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
