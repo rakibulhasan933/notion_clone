@@ -6,13 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL_MAIN")
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 model Note {
-  id          Int      @id @unique @default(autoincrement())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   imageUrl    String
   editorState String
