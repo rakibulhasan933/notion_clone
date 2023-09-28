@@ -8,6 +8,7 @@ import Link from 'next/link'
 import Popup from './Popup';
 import { useMutation } from '@tanstack/react-query';
 import axios from "axios";
+import { useAuth } from "@clerk/nextjs";
 
 
 interface ResultIProps {
@@ -26,7 +27,7 @@ interface DataProps {
 
 
 export default function CreateNote() {
-
+  const { userId } = useAuth();
   const router = useRouter();
   const [input, setInput] = React.useState("");
 
@@ -44,6 +45,7 @@ export default function CreateNote() {
     mutationFn: async () => {
       const response = await axios.post("/api/createNoteBook", {
         name: input,
+        userId,
       });
       return response.data;
     },
