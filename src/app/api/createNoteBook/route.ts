@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db/prismadb";
 
+export const runtime = "edge";
 
 export async function POST(request: Request) {
 	const { userId } = auth();

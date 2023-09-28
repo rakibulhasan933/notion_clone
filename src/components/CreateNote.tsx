@@ -9,6 +9,20 @@ import Popup from './Popup';
 import { useMutation } from '@tanstack/react-query';
 import axios from "axios";
 
+interface ResultIProps {
+  result: DataProps
+};
+
+interface DataProps {
+  id: string,
+  name: string,
+  imageUrl: string,
+  editorState: string,
+  createdAt: Date,
+  updatedAt: Date,
+  userId: string,
+};
+
 
 export default function CreateNote() {
   const router = useRouter();
@@ -40,11 +54,12 @@ export default function CreateNote() {
       return;
     }
     createNoteBooks.mutate(undefined, {
-      onSuccess: () => {
-        closePopup();
+      onSuccess: (result: DataProps) => {
+        console.log(result.id);
+        router.push(`/dashboard/${result.id}`);
       },
       onError: (error) => {
-        console.log(error);
+        window.alert(error)
       }
     })
   };
