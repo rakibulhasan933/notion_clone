@@ -1,8 +1,8 @@
+import NotesServices from "@/lib/services/notes";
 import { NextResponse } from "next/server";
 import { Configuration, OpenAIApi } from "openai-edge";
 
 
-export const runtime = "edge";
 // Configuration OpenAi
 const config = new Configuration({
 	apiKey: process.env.OPENAI_API_KEY
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
 	if (!image_url) {
 		return new NextResponse("Fail to Generate Image");
 	};
+	const result = await NotesServices.createNote({ name, userId, imageUrl: image_url })
 
-
-	return NextResponse.json("ok");
+	return NextResponse.json(result);
 };
