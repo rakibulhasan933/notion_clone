@@ -21,6 +21,7 @@ export async function GET(request: Request, { params }: ParamsIProps) {
 			return NextResponse.json({ message: "Note Not Found" }, { status: 404 });
 		};
 		console.log({ note });
+
 		return NextResponse.json({ note });
 
 	} catch (error) {

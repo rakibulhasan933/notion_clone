@@ -1,16 +1,16 @@
 import { generateImage, generateImagePrompt } from "@/lib/ai/openai";
-import { auth } from "@clerk/nextjs";
+// import { currentUser } from '@clerk/nextjs';
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db/prismadb";
 
 export const runtime = "edge";
 
 export async function POST(request: Request) {
-	const { userId } = auth();
+	// const user = await currentUser();
 
-	if (!userId) {
-		return new NextResponse("User Not Found")
-	};
+	// if (!user) {
+	// 	return new NextResponse("User Not Found")
+	// };
 	const body = await request.json();
 	const { name }: { name: string } = body;
 	const image_description = await generateImagePrompt(name);
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
 		data: {
 			name: name,
 			imageUrl: image_url,
-			userId,
+			userId: "user.id",
 			editorState: "null"
 		},
 	});

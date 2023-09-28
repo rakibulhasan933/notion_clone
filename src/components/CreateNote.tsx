@@ -9,6 +9,7 @@ import Popup from './Popup';
 import { useMutation } from '@tanstack/react-query';
 import axios from "axios";
 
+
 interface ResultIProps {
   result: DataProps
 };
@@ -25,6 +26,7 @@ interface DataProps {
 
 
 export default function CreateNote() {
+
   const router = useRouter();
   const [input, setInput] = React.useState("");
 
